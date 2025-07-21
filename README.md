@@ -10,7 +10,7 @@ CPP backend for low cpu usage and low consumption, Python for gui.
 The cpp code automaticaly starts with windows and uses the EC(embedded controller) for temperature readout and fan control.
 
 ## Usage
-Install the module and reboot.
+Install the module in dist\TornadoFanControllerInstaller.exe and reboot.
 
 You can still use ACER PredatorSense and mode switching, the app wil only try to overwrite the current fan speed based of temperatures.
 
