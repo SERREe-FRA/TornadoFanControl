@@ -586,11 +586,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
             else gpuTemp = 100;
         }
 
-        int cpuFan = cpuPID.update(cpuTemp);
-        int gpuFan = gpuPID.update(gpuTemp);
+        int gpuFan = cpuPID.update(cpuTemp);
+        int cpuFan = gpuPID.update(gpuTemp);
 
-        if (cpuFan > gpuFan + 10) gpuFan = cpuFan - 10;
-        else if (gpuFan > cpuFan + 10) cpuFan = gpuFan - 10;
+        // if (cpuFan > gpuFan + 10) gpuFan = cpuFan - 10;
+        // else if (gpuFan > cpuFan + 10) cpuFan = gpuFan - 10;
 
         if (cpuFan != cpuFanLast) {
             set_cpu_fan_manual(cpuFan);
