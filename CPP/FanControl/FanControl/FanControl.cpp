@@ -589,17 +589,17 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         int cpuFan = cpuPID.update(cpuTemp);
         int gpuFan = gpuPID.update(gpuTemp);
 
-
-		if ((cpuTemp > 80) && (gpuFan < cpuFan - 10)) {
-			gpuFan = gpuFan + 10;
-		}
-		if ((gpuTemp > 75) && (cpuFan < gpuFan - 10)) {
-			cpuFan = cpuFan + 10;
-		}
         // else if (gpuFan > cpuFan + 10) cpuFan = gpuFan - 10;
         // if (cpuFan > gpuFan + 10) gpuFan = cpuFan - 10;
         // else if (gpuFan > cpuFan + 10) cpuFan = gpuFan - 10;
 
+		if ((cpuTemp > 80) && (gpuFan < cpuFan - 10)) {
+			gpuFan = gpuFanLast + 10;
+		}
+		if ((gpuTemp > 75) && (cpuFan < gpuFan - 10)) {
+			cpuFan = cpuFanLast + 10;
+		}
+		
         if (cpuFan != cpuFanLast) {
             set_cpu_fan_manual(cpuFan);
             cpuFanLast = cpuFan;
@@ -608,7 +608,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
             set_gpu_fan_manual(gpuFan);
             gpuFanLast = gpuFan;
         }
-
+		
         g_sharedData->cpuTemp.store(cpuTemp);
         g_sharedData->gpuTemp.store(gpuTemp);
         g_sharedData->cpuFanSpeed.store(cpuFan);
