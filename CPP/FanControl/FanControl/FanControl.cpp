@@ -593,8 +593,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         // if (cpuFan > gpuFan + 10) gpuFan = cpuFan - 10;
         // else if (gpuFan > cpuFan + 10) cpuFan = gpuFan - 10;
 
-		if (cpuTemp > 80 && gpuFanLast < cpuFanLast) gpuFan = gpuFanLast + 10;
+		if (cpuTemp > 80 && gpuFanLast <= cpuFanLast) gpuFan = gpuFanLast + 10;
+		if (cpuTemp > 80 && gpuFanLast >= cpuFanLast) gpuFan = gpuFanLast - 10;
 		if (gpuTemp > 75 && cpuFanLast < gpuFanLast) cpuFan = cpuFanLast + 10;
+		if (gpuTemp > 75 && cpuFanLast >= gpuFanLast) cpuFan = cpuFanLast - 10;
 		
         if (cpuFan != cpuFanLast) {
             set_cpu_fan_manual(cpuFan);
