@@ -596,7 +596,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		if ((cpuTemp > 80) AND (gpuFan < cpuFan)) {
 			gpuFan = gpuFanLast + 10;
 		}
-		else if ((gpuTemp > 75) AND (cpuFan < gpuFan)) {
+		if ((gpuTemp > 75) AND (cpuFan < gpuFan)) {
 			cpuFan = cpuFanLast + 10;
 		}
 		
