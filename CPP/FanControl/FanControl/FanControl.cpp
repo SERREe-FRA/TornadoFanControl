@@ -586,9 +586,17 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
             else gpuTemp = 100;
         }
 
-        int cpuFan = cpuPID.update(cpuTemp);   // on my computer the reading seems inverted between cpu fan speed and gpu fan speed
-        int gpuFan = gpuPID.update(gpuTemp);   // on my computer the reading seems inverted between cpu fan speed and gpu fan speed
+        int cpuFan = cpuPID.update(cpuTemp);
+        int gpuFan = gpuPID.update(gpuTemp);
 
+
+		if ((cpuTemp > 80) && (gpuFan < cpuFan - 10)) {
+			gpuFan = gpuFan + 10;
+		}
+		if ((gpuTemp > 75) && (cpuFan < gpuFan - 10)) {
+			cpuFan = cpuFan + 10;
+		}
+        // else if (gpuFan > cpuFan + 10) cpuFan = gpuFan - 10;
         // if (cpuFan > gpuFan + 10) gpuFan = cpuFan - 10;
         // else if (gpuFan > cpuFan + 10) cpuFan = gpuFan - 10;
 
@@ -603,8 +611,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
         g_sharedData->cpuTemp.store(cpuTemp);
         g_sharedData->gpuTemp.store(gpuTemp);
-        g_sharedData->cpuFanSpeed.store(cpuFan);  // on my computer the reading seems inverted between cpu fan speed and gpu fan speed
-        g_sharedData->gpuFanSpeed.store(gpuFan);  // on my computer the reading seems inverted between cpu fan speed and gpu fan speed
+        g_sharedData->cpuFanSpeed.store(cpuFan);
+        g_sharedData->gpuFanSpeed.store(gpuFan);
 
         // Use shorter sleep and check for exit condition
         for (int i = 0; i < 10 && g_running.load(); i++) {
